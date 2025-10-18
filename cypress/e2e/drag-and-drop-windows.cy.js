@@ -13,7 +13,7 @@ describe('Drag and Drop and Window', () => {
         cy.get('h3').should('have.text', 'Opening a new window')
     });
 
-    it.only('Drag and drop', () => {
+    it('Drag and drop', () => {
         cy.visit('https://the-internet.herokuapp.com/drag_and_drop')
 
         const dataTransfer = new DataTransfer()
