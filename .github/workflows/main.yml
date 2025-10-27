@@ -5,23 +5,31 @@ on:
 
 jobs:
   e2e-tests:
-
     runs-on: ubuntu-latest
 
     steps:
-
-      # clone do projeto para a máquina
       - uses: actions/checkout@v4
 
-      # conferir a versão instalada
       - name: Node version
         run: node --version
 
       - name: Instalando dependências
         run: npm install
 
-      - name: Executando os testes trabalho final
-        run: npx cypress run --spec "cypress/e2e/automation-exercise-test-cases-modules.cy.js"
+      - name: Listar arquivos cypress (debug)
+        run: |
+          echo "Arquivos em cypress/e2e:"
+          ls -la cypress || true
+          ls -la cypress/e2e || true
+          echo "Buscar o arquivo exato:"
+          ls -la cypress/e2e/**/automation-exercise-test-cases-modules.cy.js || true
+
+      - name: Executando os testes trabalho final (específico)
+        run: |
+          # tenta com caminho exato
+          npx cypress run --spec "cypress/e2e/automation-exercise-test-cases-modules.cy.js"
+          # se o comando anterior não encontrar, force um glob mais amplo (uncomment se quiser usar)
+          # npx cypress run --spec "cypress/e2e/**/automation-exercise-test-cases-modules.cy.js"
 
       - uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
